@@ -174,7 +174,7 @@ http://localhost:5601
 
 ### Install Filebeat on Lucee server
 
-- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `I'm still working on this section, but here is how I was getting a proof of concept up and running.`
+![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `I'm still working on this section, but below is how I was getting a proof of concept up and running.`
 
 First we access a TTY inside the Mura container:
 `docker exec -it elkStack_mura_1 bash`
