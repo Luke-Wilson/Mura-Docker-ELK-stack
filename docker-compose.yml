@@ -38,8 +38,6 @@ services:
   logstash:
     image: logstash:7.0.1
     depends_on: ['elasticsearch']
-    environment:
-      XPACK_MONITORING_ENABLED: "true"
     expose: 
       - "8080"
       - "5044"
