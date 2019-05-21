@@ -1,0 +1,8 @@
+http.host: 0.0.0.0
+xpack.monitoring.elasticsearch.hosts:
+- http://elasticsearch:9200
+xpack.monitoring.enabled: true
+
+# Elastic Cloud config:
+# cloud.auth: your_username:your_password
+# cloud.id: your_cloud_id
