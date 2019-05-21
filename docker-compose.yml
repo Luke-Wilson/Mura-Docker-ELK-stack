@@ -3,37 +3,73 @@ services:
   mura_mysql:
     image: mysql:5.7
     environment:
-        MYSQL_ROOT_PASSWORD: NOT_SECURE_CHANGE
-        MYSQL_DATABASE: muradb
+      MYSQL_ROOT_PASSWORD: NOT_SECURE_CHANGE
+      MYSQL_DATABASE: muradb
     volumes:
-        - mura_mysql_data:/var/lib/mysql
+      - mura_mysql_data:/var/lib/mysql
     ports:
-        - "55555:3306"
+      - "55555:3306"
 
   #Mura Server
   mura:
     image: blueriver/muracms:latest
     environment:
-        MURA_ADMIN_USERNAME: admin
-        MURA_ADMIN_PASSWORD: admin
-        MURA_ADMINEMAIL: example@localhost.com
-        MURA_APPRELOADKEY: appreload
-        MURA_DATASOURCE: muradb
-        MURA_DATABASE: muradb
-        MURA_DBTYPE: mysql
-        MURA_DBUSERNAME: root
-        MURA_DBPASSWORD: NOT_SECURE_CHANGE
-        MURA_DBHOST: mura_mysql
-        MURA_DBPORT: 3306
-        MURA_SITEIDINURLS: "false"
-        MURA_INDEXFILEINURLS: "false"
+      MURA_ADMIN_USERNAME: admin
+      MURA_ADMIN_PASSWORD: admin
+      MURA_ADMINEMAIL: example@localhost.com
+      MURA_APPRELOADKEY: appreload
+      MURA_DATASOURCE: muradb
+      MURA_DATABASE: muradb
+      MURA_DBTYPE: mysql
+      MURA_DBUSERNAME: root
+      MURA_DBPASSWORD: NOT_SECURE_CHANGE
+      MURA_DBHOST: mura_mysql
+      MURA_DBPORT: 3306
+      MURA_SITEIDINURLS: "false"
+      MURA_INDEXFILEINURLS: "false"
     volumes:
-        -   ./sites:/var/www/sites
-        -   ./themes:/var/www/themes
-        -   ./modules:/var/www/modules
-        -   ./core:/var/www/core
+      - ./sites:/var/www/sites
+      - ./themes:/var/www/themes
+      - ./modules:/var/www/modules
+      - ./core:/var/www/core
     ports:
-        - "8888:8888"
+      - "8888:8888"
+
+  logstash:
+    image: logstash:7.0.1
+    depends_on: ['elasticsearch']
+    environment:
+      XPACK_MONITORING_ENABLED: "true"
+    expose: 
+      - "8080"
+      - "5044"
+    volumes:
+      - ./logstash/config:/usr/share/logstash/config
+      - ./logstash/pipelines:/usr/share/logstash/pipeline
+
+  elasticsearch:
+    image: elasticsearch:7.0.1
+    ports: 
+      - "9200:9200"
+      - "9300:9300"
+    expose: 
+      - "9200"
+      - "9300"
+    environment:
+      discovery.type: single-node
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.0.1
+    depends_on: ['elasticsearch']
+    environment:
+      SERVER_NAME: kibana
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports: 
+      - "5601:5601"
+    expose:
+      - "5601"
 
 volumes:
     mura_mysql_data:
@@ -41,3 +77,5 @@ volumes:
     mura_modules_data:
     mura_themes_data:
     mura_plugins_data:
+    esdata01:
+      driver: local
