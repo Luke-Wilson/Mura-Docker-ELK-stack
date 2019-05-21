@@ -33,6 +33,7 @@ The goal of using Elastic Stack to manage our logs is to make it easier to parse
 ![](./img/elasticStackOverview.png)
 
 The basics of our Elastic Stack is like so:
+
 Filebeat is a lightweight log shipper that runs on the web server and watches certain log files. Whenever a change is detected, the difference (e.g. the new line) gets shipped off to Logstash.
 
 Logstash accepts inputs from Filebeat as well as HTTP post requests, applies filters and manipulations to the data, and then outputs them to Elastic Search.
