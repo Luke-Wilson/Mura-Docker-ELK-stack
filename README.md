@@ -42,7 +42,7 @@ Elastic Search acts as a NoSQL database and stores our logs in indices.
 
 Kibana queries Elastic Search's data to produce visualizations and create a way for us to inspect and interact with our logs.
 
-![Container Structure](./img/containerStructure.png)
+![Container Structure](./img/containerStructure2.png)
 
 ## Step by step overview:
 
