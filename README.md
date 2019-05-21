@@ -141,8 +141,8 @@ kibana:
 
 http://localhost:5601
 
-!["./img/createIndexPattern.png"]
-!["./img/configureTimestamp.png"]
+![Create index pattern](./img/createIndexPattern.png)
+![Configure timestamp](./img/configureTimestamp.png)
 
 ### View your test HTTP logs in Kibana
 
