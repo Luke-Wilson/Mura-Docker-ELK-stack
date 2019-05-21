@@ -213,6 +213,8 @@ Remove the default filebeat.yml
 Create a new filebeat.yml
 `vi filebeat.yml`
 
+Add the below configuration to this file. This config tells filebeat which directories and what type of files to watch. It also tells Filebeat that we want our outputs to go to Logstash at logstash:5044.
+
 ```
 filebeat.inputs:
 - type: log
@@ -241,8 +243,41 @@ processors:
 
 ### Run Filebeat
 
+We use the -e flag here to view the STDOUT of filebeat (to help us monitor if things are going wrong).
+
+```
+./filebeat -e
+```
+
 ### Create a mock Catalina log entry
+
+In a separate terminal window, start a new TTY in the Mura container:
+
+```
+docker exec -it elkStack_mura_1 bash
+```
+
+Navigate to the log directory that Filebeat is watching:
+
+```
+cd /usr/local/tomcat/logs/
+```
+
+Manually enter a new line to a Catalina log using `echo`:
+
+```
+echo '21-May-2019 17:46:32.610 INFO [main] org.apache.catalina.startup.Catalina.start THIS IS A TEST ENTRY' >> catalina.2019-05-21.log
+```
+
+Note: If you use Vim to do this, all lines will be resent to Logstash instead of just the new line.
 
 ### Map an index pattern to the serverlog index
 
+In Kibana, click on the Kibana icon in the top left corner.
+Then click "Index Patterns" under "Manage and Administer the Elastic Stack".
+
+![Create serverlogs-* index pattern](./img/createServerIndexPattern.png)
+
 ### View your test serverlog entry in Kibana
+
+![Server Logs](./img/serverLogEntries.png)
