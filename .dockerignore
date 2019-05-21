@@ -1,0 +1,12 @@
+.git
+.gitignore
+.gitmodules
+installation.txt
+license.txt
+README.md
+Mura_CMS_contribution_agreement.pdf
+docker-compose.yml
+docker-offline.yml
+stack-review.yml
+buddy.yml
+travis.yml

@@ -1,0 +1,86 @@
+# Mura CMS root/.gitignore
+# ---------------------------------------------
+
+# ignored file extensions & system directories
+*~
+*_notes/
+*.codekit
+*.esproj
+*.less.css
+*.log
+*.sublime-project
+*.sublime-workspace
+sftp-config.json
+
+# ignored '.' files and directories
+._*
+.cache
+.DS_Store
+.htaccess
+.project
+.rdsTempFiles
+.sass-cache
+.settings
+.tmproj
+.svn
+
+# ignored files, regardless of location
+cffp.ini.cfm
+crossdomain.xml
+robots.txt
+settings.xml
+Thumbs.db
+web.config
+web.xml
+server-*.json
+server.json
+
+# ignored directories, regardless of location
+compiled/
+logs/
+temp/
+
+# ignored CF & Tomcat directories
+CFIDE/
+META-INF/
+WEB-INF/
+
+# ignored directories
+/demo/
+/plugins/
+/temp/
+node_modules/
+/core/vendor/docbox/
+/core/vendor/testbox/
+/modules/dynamic_entities
+
+# ignored 'config' directory files
+/config/mappings.cfm
+/config/applicationSettings.cfm
+/config/settings.cfm
+/config/appcfc
+/config/cfapplication.cfm
+/config/settings.ini.cfm
+/config/version.cfm
+
+# ignored 'default' site files & directories
+/default/assets/
+/default/cache/
+/default/includes/Application.cfc
+/default/includes/contentRenderer.cfc
+/default/includes/email/
+/default/includes/eventHandler.cfc
+/default/js/node_modules/
+/default/model/
+/sites/default/assets/
+/sites/default/cache/
+/sites/default/Application.cfc
+/sites/default/contentRenderer.cfc
+/sites/default/email/
+/sites/default/eventHandler.cfc
+/sites/default/js/node_modules/
+/sites/default/model/
+
+# ignore directories beginning with 'demo-' or 'temp-'
+demo-*/
+temp-*/

@@ -1,0 +1,641 @@
+
+	.mura-modal, .modal-backdrop {
+	  background-image: none!important;
+	  background-color: rgba(255,255,255,.8)!important;
+	}
+
+	#frontEndToolsModalContainer {
+	 /* position: [Set in dialog.js]; */
+	  /*height: [Set in dialog.js];*/
+	  display: block;
+	  width: 100%;
+	  top: 0;
+	  left: 0;
+	  text-align: center; /* centers in quirks and IE */
+		.mura-modal;
+	}
+
+	#frontEndToolsModalBody {
+	  position: relative;
+	  overflow: visible;
+	  top: 70px;
+	  margin: 0 auto;
+	  padding: 0;
+	  background: transparent;
+
+	  body {
+		  border: 6px solid @grayDark !important;
+		  }
+	}
+
+	#frontEndToolsModaliframe {
+	  width: 100%;
+	  min-height: 400px;
+	  background: transparent;
+	  .border-radius(2px);
+	}
+
+	.modal-configurator #frontEndToolsModaliframe {
+	  width: 600px !important;
+	  background: transparent;
+	}
+
+	.modal-configurator #frontEndToolsModalBody {
+	  width: 600px;
+	}
+
+	#shadowbox_container {
+		z-index: 499997;
+	}
+
+	#shadowbox_overlay {
+		z-index: 499996;
+	}
+
+	#dialog_overlay {
+		background-color: #000000;
+		display: none;
+		height: 100%;
+		left:0;
+		position: absolute;
+		top:0;
+		width: 100%;
+		z-index: 500000;
+		opacity: 0.8;
+	}
+
+	#dialog_overlay[id] {
+		position: fixed;
+	}
+
+	.editForm { /* Holds the edit content, iframe, etc. */
+		display: none;
+		padding: 2%;
+		position: absolute;
+		text-align: center;
+		top: 2%;
+		width: 90%;
+		height: 90%;
+		z-index: 499998;
+	}
+
+	.editForm[id] {
+		position: fixed;
+	}
+
+	#editFormIframeContainer {
+		background-color: #fff;
+		height: 100%;
+		position: relative;
+	}
+
+	#closeDiv {
+		position: absolute;
+		left: -10px;
+		top: -10px;
+		z-index: 50000;
+	}
+
+	// Toolbar
+
+	#frontEndToolsHandle,
+	#frontEndToolsHandle img{
+		background: transparent !important;
+		border: 0 !important;
+		box-shadow: none !important;
+		cursor: pointer !important;
+		height: 20px !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		width: auto !important;
+		z-index: 500001 !important;
+	}
+
+	#frontEndToolsHandle img{
+		position: fixed !important;
+			left: 10px !important;
+			top: 10px !important;
+	}		
+	#frontEndToolsHandleText img{
+		position: fixed !important;
+			left: 36px !important;
+			top: 8px !important;
+	}		
+	
+	#frontEndTools {
+		background: #333;
+		filter: none !important;
+		height: @feToolBarHeight !important;
+		position: fixed !important;
+		left: 0px !important;
+		top: 0px !important;
+		width: 100% !important;
+		z-index: 499999 !important;
+		text-align: left !important;
+		font-weight: normal !important;
+		.regular-font;
+	}
+
+	#frontEndTools > ul {
+		min-height: (@feToolBarHeight - 1) !important;
+		list-style: none !important;
+		margin: 0 !important;
+		padding: 0 12px 0 0 !important;
+		overflow: visible !important;
+		float: left !important;
+
+		&:first-child {
+			margin-left: 102px !important;
+			border-left: 0;
+		}
+
+		&:last-child {
+			float: right !important;
+			border-right: 0 !important;
+		}
+
+
+			&> ul > li#adminSiteManager404 {
+				border-right: 0 !important;
+			}
+
+
+	}
+
+	#frontEndTools > ul > li {
+
+		background: none !important;
+		box-sizing: border-box !important;
+		color: rgba(255,255,255,.7) !important;
+		float: left !important;
+		height: @feToolBarHeight !important;
+		font-weight: normal !important;
+		font-size: 12px !important;
+		font-style: normal !important;
+		line-height: @feToolBarHeight !important;
+		list-style: none !important;
+		margin: 0 !important;
+		overflow: visible !important;
+		padding: 0 !important;
+		text-align:center;
+		.regular-font;
+
+		&:first-child {
+			border-left: 0 !important;
+			padding-left: 0 !important;
+			}
+
+		a {
+		display: block !important;
+		color: @white !important;
+		background: transparent !important;
+		font-size: @feToolbarFontSize !important;
+		height: @feToolBarHeight !important;
+		line-height: @feToolBarHeight !important;
+		padding: 0 10px !important;
+		text-decoration: none !important;
+		font-weight: normal !important;
+		font-style: normal !important;
+		outline: 0 !important;
+		border: 0 !important;
+		.border-radius(0) !important;
+		.regular-font;
+			> i {
+			color: rgba(255,255,255,.7) !important;
+			font-size: @feToolbarIconSize !important;
+			position: relative !important;
+			top: 1px !important;
+			overflow: visible !important;
+			padding-top: 0 !important;
+			padding-bottom: 0 !important;
+			width: auto;
+
+				&.mi-mobile {
+					font-size: (@feToolbarIconSize + 3) !important;
+					padding-left: 0px !important;
+					top: 2px !important;
+					}
+
+				&.mi-plus {
+					//padding-left: 3px
+					}
+			}
+
+		}
+
+		.caret {
+				border-top-color: rgba(255,255,255,.25) !important;
+				margin-left: 5px !important;
+				margin-right: 5px !important;
+				margin-top: 3px !important;
+			}
+
+		&:first-child a {
+			.border-left-radius(0);
+			border-left: 0 !important;
+			}
+
+		&:last-child a {
+			.border-right-radius(0);
+			border-right: 0 !important;
+			}
+	}
+
+	#frontEndTools > #tools-status > li {
+
+	 	padding-right: 6px !important;
+
+		> a {
+			border: 0 !important;
+			min-width: 72px !important;
+		 	padding-top: 2px !important;
+		}
+
+		&#adminStatus{
+
+			min-width: 72px !important;
+
+			&> a {
+				background-color: @mura-blue !important;
+				border-radius: 0 !important;
+				}
+			}
+		}
+
+	#frontEndTools > #tools-status.status-locked i:before {
+			color: @errorBorder !important;
+		}
+
+	#frontEndTools > ul#tools-version {
+			margin-left: 22px !important;
+
+		> li {
+
+			&#adminEditPage {
+				padding-right: 0 !important;
+
+				a.dropdown-toggle{
+					padding-right: 3px !important;
+				}
+
+				.caret {
+					margin-left: 0 !important;
+					margin-right: 0 !important;
+				}
+			}
+
+			}
+		}
+
+	#frontEndTools > ul + ul#tools-changesets {
+		margin-left: 22px !important;
+	}	
+	
+	#frontEndTools > ul#tools-changesets {
+
+			float: left !important;
+			margin-left: 44px;
+
+			li {
+				cursor: pointer !important;
+				}
+
+			> li#cs-title > a {
+			padding-right: 4px !important;
+
+			& > i {
+			.bold-font;
+			.border-radius(18px) !important;
+			background: @grayDarker !important;
+			background: rgba(0,0,0,.35) !important;
+			font-size: (@feToolbarIconSize - 6) !important;
+			font-style: normal !important;
+			line-height: .8 !important;
+			margin-right: 4px !important;
+			overflow: visible !important;
+			padding: 5px 6px 5px 5px !important;
+			position: relative !important;
+			text-align: center !important;
+				&.list-alt {
+					top: 2px !important;
+				}
+
+			}
+		}
+	}
+	@media (max-width: (@screen-md-min - 1)) {
+		#frontEndTools > ul + ul#tools-changesets {
+			margin-left: 0 !important; 	
+			#cs-title-text{
+			    max-width: 100px;
+			    text-overflow: ellipsis!important;
+			    white-space: nowrap;
+			}
+			 > li a{
+				padding: 0 6px !important;
+			}
+		}
+		#frontEndTools > ul#tools-version{
+			margin-left: 0 !important;
+			 > li a{
+				padding: 0 7px !important;
+			}
+		}
+	}
+	@media (max-width: (@screen-sm-min + 21)) {
+		#frontEndTools > ul#tools-version{
+			padding-left: 2px !important;
+		}	
+		#frontEndTools > ul#tools-status{
+			padding-right: 2px !important;
+		}
+		#frontEndTools > ul#tools-user li#adminWelcome {
+			display:none;
+		}
+		#frontEndTools > ul#tools-changesets {
+			display:none;
+		}
+	}
+	@media (max-width: (@screen-sm-min - 150)) {
+		#frontEndTools > ul#tools-user li#adminLogOut{
+			margin-right: 0 !important;
+			a > span{
+				display:none;
+			}
+		} 
+	}
+	@media (max-width: (@screen-sm-min - 350)) {
+		#frontEndTools > ul#tools-user li#adminLogOut{
+			display: none;
+		}
+	}	
+	#frontEndTools>ul#tools-version, 
+	#frontEndTools>ul#tools-status{
+		display: block !important;
+	} 
+
+	
+	#frontEndTools > #adminDashboard {
+
+		border-right: 0 !important;
+
+		> li {
+			border: 0 !important;
+
+				> a > i {
+					margin-right: 4px !important;
+
+					&.mi-dashboard {
+						top: -1px !important;
+					}
+
+				}
+
+			}
+		}
+
+	#frontEndTools > #tools-status > li > a i {
+		margin-left: 3px !important;
+		margin-right: 2px !important;
+	}
+
+	#frontEndTools > #tools-user,
+	#frontEndTools > #tools-version,
+	#frontEndTools > #tools-changesets {
+		margin-top: 1px !important;
+		&> li > a{
+			height: 38px !important;
+			line-height: 38px !important;
+		}
+	}	
+
+	#frontEndTools > #tools-user {
+		border: 0 !important;
+
+		> li {
+		float: right !important;
+		margin-right: 16px !important;
+		padding: 0 !important;
+		border: 0 !important;
+		font-size: @feToolbarFontSize !important;
+		line-height: @feToolBarHeight !important;
+		color: @white !important;
+
+		a {
+			background: transparent !important;
+			font-size: @feToolbarFontSize !important;
+			border: 0 !important;
+			line-height: @feToolBarHeight !important;
+			padding: 0 !important;
+			}
+
+		i {
+			font-size: @feToolbarIconSize !important;
+			top: 1px !important;
+			margin-right: 5px !important;
+			color: rgba(255,255,255,.5)
+			}
+
+		}
+	}
+
+	#frontEndTools > ul > li#adminSave {
+		background: transparent !important;
+		border: 0 !important;
+		color: #fff !important;
+		float: left !important;
+		font-weight: normal !important;
+		font-style: normal !important;
+		line-height: 30px !important;
+		list-style: none !important;
+		min-width: 95px !important;
+		position: relative;
+		text-align: left;
+
+			> a {
+			background-color: @mura-blue !important;
+			background-image: none !important;
+			border-color: #4882cc;
+			color: @white !important;
+			cursor: pointer !important;
+			display: inline-block !important; 
+			font-size: @feToolbarFontSize !important;
+			padding: 2px 12px !important;
+			position: relative !important;
+
+			&:hover {
+
+				cursor: pointer !important;
+
+				/*
+				> i {
+					color: @blueDarker !important;
+					}
+				*/
+
+				}
+
+			.caret {
+				border-top-color: @blueDarker !important;
+				margin: 9px 0 0 4px !important;
+				}
+			}
+
+			&.mura-saving > a{
+				cursor: default !important;						
+
+				i{	
+					-webkit-animation: fa-spin 2s infinite linear;
+					animation: fa-spin 2s infinite linear;	
+					font-size: @feToolbarFontSize !important;				
+					margin-right: 1px !important;
+				}
+
+				&:hover i{
+					opacity:.7 !important;
+				}
+				
+			}
+
+			&.mura-saving > ul.dropdown-menu{
+				display:none !important;
+			}
+
+
+		}
+
+	#frontEndTools > ul > li a:hover,
+	#frontEndTools > ul > li > a:hover > i {
+		color: @white !important;
+		}
+
+	#frontEndTools > ul > li.suspend > a,
+	#frontEndTools > ul > li.suspend > a:hover{
+
+		cursor: text;
+
+		> i{
+			color: rgba(255,255,255,.7)!important;
+		}
+	}
+
+	#frontEndTools > ul > li.dropdown .dropdown-menu {
+
+		.border-bottom-radius(2px) !important;
+		.border-top-radius(0) !important;
+  	.box-shadow(0 4px 6px rgba(0,0,0,.50)) !important;
+		border: 0 !important;
+		background: rgba(255, 255, 255, 0.13) !important;
+  	background: hsla(0,0%,18%,.97) !important;
+		cursor: pointer !important;
+		margin-left: -5px;
+  	margin-top: 0 !important;
+		padding-bottom: 2px;
+		padding-top: 0;
+  	text-align: left !important;
+		top: (@feToolBarHeight - 1);
+
+
+		li {
+			cursor: pointer !important;
+			display: block !important;
+			margin: 0 !important;
+			padding: 0;
+
+			}
+
+		a {
+			color: #CCC !important;
+			padding: 5px 10px !important;
+			line-height: 1.2 !important;
+			float: none !important;
+			display: block !important;
+			height: auto !important;
+			cursor: pointer !important;
+			background: transparent !important;
+			.border-radius(0);
+			}
+
+		li > a:hover {
+			color: @white !important;
+			cursor: pointer !important;
+			}
+
+		i {
+			display: inline-block !important;
+			margin-left: 0 !important;
+			margin-right: 2px !important;
+			min-width: 16px !important;
+			text-align: center !important;
+			top: 1px !important;
+			}
+
+		li > a:hover i {
+			color: @white !important;
+			}
+
+	}
+
+
+	#frontEndTools > ul li.dropdown-submenu {
+
+	  position:relative;
+
+		> .dropdown-menu {
+			display: none;
+			margin-left: 0 !important;
+	    top:0 !important;
+	    left:100%;
+	    margin-top:-6px;
+	    margin-left:-1px;
+		}
+
+		&:hover > .dropdown-menu{
+			display:block !important;
+		}
+
+		a {
+
+			&:after {
+			border-left-color: @grayLight !important;
+			margin-top: 5px !important;
+			margin-right: 0 !important;
+			margin-left: -5px !important;
+			}
+		}
+	}
+
+	#frontEndTools > ul > li#adminSave .dropdown-menu,
+	#frontEndTools > ul > li#adminPreview .dropdown-menu{
+		margin-left: 0 !important;
+		width: auto !important;
+	}
+
+	.dropdown-submenu:hover > .dropdown-menu,
+	#frontEndTools .dropdown-submenu:hover > .dropdown-menu{
+	    display:block;
+	}
+
+
+	/* strongarm mura admin toolbar - blocks some theme items from bleeding into the toolbar */
+
+	#frontEndTools {
+		> ul > li a.dropdown-toggle {
+			position: static;
+			overflow: hidden;
+			width: auto;
+
+			&::after {
+				content: none;
+			}
+		}
+
+		.dropdown-menu {
+			color: rgba(255,255,255,.7) !important;
+
+			&::before,
+			&::after {
+				content: none !important;
+			}
+		}
+	}
