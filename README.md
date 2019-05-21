@@ -282,4 +282,6 @@ Then you can create a `serverlogs-*` index pattern.
 
 ### View your test serverlog entry in Kibana
 
+Use the Discover view.
+
 ![Server Logs](./img/serverLogEntries.png)
