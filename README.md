@@ -276,6 +276,8 @@ Note: If you use Vim to do this, all lines will be resent to Logstash instead of
 In Kibana, click on the Kibana icon in the top left corner.
 Then click "Index Patterns" under "Manage and Administer the Elastic Stack".
 
+Then you can create a `serverlogs-*` index pattern.
+
 ![Create serverlogs-* index pattern](./img/createServerIndexPattern.png)
 
 ### View your test serverlog entry in Kibana
