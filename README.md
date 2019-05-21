@@ -78,11 +78,11 @@ filter {
 	}
 	grok {
 		match => { "message" => "%{URIHOST:log_server_date} %{TIME:log_server_time} %{WORD:log_level} %{SYSLOG5424SD} %{JAVACLASS} %{GREEDYDATA:msg}" }
-  }
+	}
 }
 ```
 
-### Create logstash service
+### Create the logstash service
 
 In your docker-compose.yml, create a new service called "logstash":
 
@@ -102,7 +102,7 @@ logstash:
 		- ./logstash/pipelines:/usr/share/logstash/pipeline
 ```
 
-### Create elasticsearch service
+### Create the elasticsearch service
 
 Since logstash will be sending its outputs to Elastic Search, we need to create a elasticsearch service.
 
@@ -139,7 +139,7 @@ volumes:
 3. Click the "Send log via HTTP to logstash:8080" link.
 4. Check to see if your index in Elastic Search received a new document by checking the docs.count column for the myhttpindex-\* row
 
-### Add the kibana service
+### Create the kibana service
 
 Now that we are creating log entries, we can set up Kibana to explore these logs. Add the kibana service to `docker-compose.yml`
 
@@ -170,9 +170,74 @@ http://localhost:5601
 
 ### View your test HTTP logs in Kibana
 
+![View your HTTP logs](./img/httpLogEntries.png)
+
 ### Install Filebeat on Lucee server
 
+I'm still working on this section, but here is how I was getting a proof of concept up and running.
+
+First we access a TTY inside the Mura container:
+`docker exec -it elkStack_mura_1 bash`
+
+Once inside, the working directory should be /usr/local/tomcat
+
+Next we download the Filebeat archive using a curl command:
+
+```
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.0.1-linux-x86_64.tar.gz
+```
+
+Then we extract filebeat using:
+
+```
+tar xzvf filebeat-7.0.1-linux-x86_64.tar.gz blergh
+```
+
+### Install Vim on Lucee server
+
+While still in TTY of the Mura docker service, install Vim in preparation for the next step
+
+```
+apt-get update
+apt-get install vim -y
+```
+
 ### Configure Filebeat
+
+Navigate to the new filebeat directory:
+`cd filebeat-7.0.1-linux-x86_64`
+
+Remove the default filebeat.yml
+`rm filebeat.yml`
+
+Create a new filebeat.yml
+`vi filebeat.yml`
+
+```
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /usr/local/tomcat/logs/*.log
+
+filebeat.config.modules:
+  # Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: true
+
+setup.template.settings:
+  index.number_of_shards: 1
+
+setup.kibana:
+  host: "kibana:5601"
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+processors:
+  - add_host_metadata: ~
+  - add_cloud_metadata: ~
+```
 
 ### Run Filebeat
 
