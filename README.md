@@ -50,7 +50,9 @@ The way you set this up may vary depending on your particular project. For my co
 ### Add Logstash config files
 
 We'll create the following files locally, and then mount them into the `logstash` service:
-.
+
+```
+/
 └── logstash
 ├── config
 | ├── logstash.yml
@@ -58,6 +60,7 @@ We'll create the following files locally, and then mount them into the `logstash
 └── pipelines
 ├── beats.conf
 └── http.conf
+```
 
 ### Create logstash service
 
@@ -142,6 +145,7 @@ kibana:
 http://localhost:5601
 
 ![Create index pattern](./img/createIndexPattern.png)
+
 ![Configure timestamp](./img/configureTimestamp.png)
 
 ### View your test HTTP logs in Kibana
