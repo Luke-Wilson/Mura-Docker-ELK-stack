@@ -26,6 +26,23 @@ Simply hold down control-c to stop the service.
 
 # Guide
 
+## About the Elastic Stack
+
+The goal of using Elastic Stack to manage our logs is to make it easier to parse through our logs to uncover root causes of issues, while at the same time giving us more powerful tools to visualize what else might be happening. It has the benefit of keeping our logs separate from the server and database, which allows us to store logs with more detail for longer periods of time.
+
+![](./img/elasticStackOverview.png)
+
+The basics of our Elastic Stack is like so:
+Filebeat is a lightweight log shipper that runs on the web server and watches certain log files. Whenever a change is detected, the difference (e.g. the new line) gets shipped off to Logstash.
+
+Logstash accepts inputs from Filebeat as well as HTTP post requests, applies filters and manipulations to the data, and then outputs them to Elastic Search.
+
+Elastic Search acts as a NoSQL database and stores our logs in indices.
+
+Kibana queries Elastic Search's data to produce visualizations and create a way for us to inspect and interact with our logs.
+
+![Container Structure](./img/containerStructure.png)
+
 ## Step by step overview:
 
 1. Get Mura running
