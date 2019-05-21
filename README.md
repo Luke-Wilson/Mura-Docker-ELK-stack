@@ -1,6 +1,6 @@
 # Mura + ELK + Docker
 
-#### Start up:
+### # Start up:
 
 Then access the application via:
 
@@ -13,7 +13,7 @@ Username:admin
 Password:admin
 ```
 
-#### MYSQL Connection Info:
+### # MYSQL Connection Info:
 
 ```
 Host: localhost
@@ -43,10 +43,12 @@ Simply hold down control-c to stop the service.
 13. Map an index pattern to the serverlog index
 14. View your test serverlog entry in Kibana
 
-###Get Mura running
+### Get Mura running
+
 The way you set this up may vary depending on your particular project. For my config, see the `mura` and `mura_mysql` services in `docker-compose.yml`
 
-###Add Logstash config files
+### Add Logstash config files
+
 We'll create the following files locally, and then mount them into the `logstash` service:
 .
 └── logstash
@@ -57,7 +59,8 @@ We'll create the following files locally, and then mount them into the `logstash
 ├── beats.conf
 └── http.conf
 
-###Create logstash service
+### Create logstash service
+
 In your docker-compose.yml, create a new service called "logstash":
 
 You'll need to expose ports 8080 (so that logstash will accept HTTP log inputs) and 5044 (to accept filebeat log inputs).
@@ -76,7 +79,8 @@ logstash:
 		- ./logstash/pipelines:/usr/share/logstash/pipeline
 ```
 
-###Create elasticsearch service
+### Create elasticsearch service
+
 Since logstash will be sending its outputs to Elastic Search, we need to create a elasticsearch service.
 
 We want to publish ports 9200 and 9300 so that we can access ES at http://localhost:9200
@@ -105,14 +109,15 @@ volumes:
 		driver: local
 ```
 
-###Create a test HTTP log entry
+### Create a test HTTP log entry
 
 1. Start up the services using `docker-compose up`
 2. Navigate to Mura at http://localhost:8888
 3. Click the "Send log via HTTP to logstash:8080" link.
 4. Check to see if your index in Elastic Search received a new document by checking the docs.count column for the myhttpindex-\* row
 
-###Add the kibana service
+### Add the kibana service
+
 Now that we are creating log entries, we can set up Kibana to explore these logs. Add the kibana service to `docker-compose.yml`
 
 We need to publish port 5601 so that we can access Kibana at http://localhost:5601.
@@ -132,22 +137,23 @@ kibana:
 		- "5601"
 ```
 
-###Login to Kibana and map an index pattern to the myhttpindex
+### Login to Kibana and map an index pattern to the myhttpindex
+
 http://localhost:5601
 
-!["./img/createIndexPattern.png]
-!["./img/configureTimestamp.png]
+!["./img/createIndexPattern.png"]
+!["./img/configureTimestamp.png"]
 
-###View your test HTTP logs in Kibana
+### View your test HTTP logs in Kibana
 
-###Install Filebeat on Lucee server
+### Install Filebeat on Lucee server
 
-###Configure Filebeat
+### Configure Filebeat
 
-###Run Filebeat
+### Run Filebeat
 
-###Create a mock Catalina log entry
+### Create a mock Catalina log entry
 
-###Map an index pattern to the serverlog index
+### Map an index pattern to the serverlog index
 
-###View your test serverlog entry in Kibana
+### View your test serverlog entry in Kibana
