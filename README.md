@@ -82,17 +82,25 @@ We'll create the following files locally, and then mount them into the `logstash
 		└── http.conf
 ```
 
-`config/logstash.yml` is some overall config for the Logstash instance. Not much needed in here, and these settings can be configured via environment variable if preferred.
+#### `config/logstash.yml`
 
-`config/pipelines.yml` tells Logstash information about the separate pipelines. In our case, we are setting up a separate pipeline for the http inputs and the inputs from beats. We use path.config to point to the `*.conf` file that configures the pipeline.
+This contains some overall config for the Logstash instance. Not much needed in here, and these settings can be configured via environment variable if preferred.
 
-`pipelines/beats.conf` Configuration for inputs from beats (Filebeat) on Logstash's port 5044. The outputs go to Elastic Search. In the output section, we tell Logstash to save these logs in Elastic Search using an index name that begins with `serverlogs-` and contains a date:
+#### `config/pipelines.yml`
+
+This tells Logstash information about the separate pipelines. In our case, we are setting up a separate pipeline for the http inputs and the inputs from beats. We use path.config to point to the `*.conf` file that configures the pipeline.
+
+#### `pipelines/beats.conf`
+
+This contains configuration for inputs from beats (Filebeat) on Logstash's port 5044. The outputs go to Elastic Search. In the output section, we tell Logstash to save these logs in Elastic Search using an index name that begins with `serverlogs-` and contains a date:
 
 ```
 index => "serverlogs-%{+YYYY.MM.dd}"
 ```
 
-`pipelines/http.conf` Configuration for inputs via HTTP request on Logstash's port 8080. Here we also apply a filter to tell Logstash to modify the data somewhat. First, I've rename the property "host" to "host_renamed", as I was getting an error akin to "host" is a reserved property.
+#### `pipelines/http.conf`
+
+This contains configuration for inputs via HTTP request on Logstash's port 8080. Here we also apply a filter to tell Logstash to modify the data somewhat. First, I've rename the property "host" to "host_renamed", as I was getting an error akin to "host" is a reserved property.
 Second, I am using "grok" (kind of like regex) to parse the log file and split it into separate properties (e.g. `log_server_date`, `log_server_time`, `log_level`, `msg`). This will make it easier to drill into logs in Kibana (e.g. when creating saved searches and visualizations).
 
 ```
