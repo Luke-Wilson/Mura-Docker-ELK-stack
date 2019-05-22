@@ -90,6 +90,13 @@ This contains some overall config for the Logstash instance. Not much needed in 
 
 This tells Logstash information about the separate pipelines. In our case, we are setting up a separate pipeline for the http inputs and the inputs from beats. We use path.config to point to the `*.conf` file that configures the pipeline.
 
+```
+- pipeline.id: http
+  path.config: "/usr/share/logstash/pipeline/http.conf"
+- pipeline.id: beats
+  path.config: "/usr/share/logstash/pipeline/beats.conf"
+```
+
 #### `pipelines/beats.conf`
 
 This contains configuration for inputs from beats (Filebeat) on Logstash's port 5044. The outputs go to Elastic Search. In the output section, we tell Logstash to save these logs in Elastic Search using an index name that begins with `serverlogs-` and contains a date:
