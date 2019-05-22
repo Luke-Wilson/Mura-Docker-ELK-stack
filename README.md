@@ -2,6 +2,8 @@
 
 ### # Start up:
 
+`docker-compose up -d`
+
 Then access the application via:
 
 http://localhost:8888
@@ -84,10 +86,14 @@ We'll create the following files locally, and then mount them into the `logstash
 
 `config/pipelines.yml` tells Logstash information about the separate pipelines. In our case, we are setting up a separate pipeline for the http inputs and the inputs from beats. We use path.config to point to the `*.conf` file that configures the pipeline.
 
-`pipelines/beats.conf` Configuration for inputs from beats (Filebeat) on Logstash's port 5044
+`pipelines/beats.conf` Configuration for inputs from beats (Filebeat) on Logstash's port 5044. The outputs go to Elastic Search. In the output section, we tell Logstash to save these logs in Elastic Search using an index name that begins with `serverlogs-` and contains a date:
+
+```
+index => "serverlogs-%{+YYYY.MM.dd}"
+```
 
 `pipelines/http.conf` Configuration for inputs via HTTP request on Logstash's port 8080. Here we also apply a filter to tell Logstash to modify the data somewhat. First, I've rename the property "host" to "host_renamed", as I was getting an error akin to "host" is a reserved property.
-Second, I am using "grok" (kind of like regex) to parse the log file and split it into separate properties (e.g. `log_server_date`, `log_level`, `msg`). This will make it easier to drill into logs in Kibana (e.g. when creating saved searches and visualizations).
+Second, I am using "grok" (kind of like regex) to parse the log file and split it into separate properties (e.g. `log_server_date`, `log_server_time`, `log_level`, `msg`). This will make it easier to drill into logs in Kibana (e.g. when creating saved searches and visualizations).
 
 ```
 filter {
@@ -98,6 +104,12 @@ filter {
 		match => { "message" => "%{URIHOST:log_server_date} %{TIME:log_server_time} %{WORD:log_level} %{SYSLOG5424SD} %{JAVACLASS} %{GREEDYDATA:msg}" }
 	}
 }
+```
+
+Again, The outputs go to Elastic Search. This time we tell Logstash to save these logs in Elastic Search using an index name starting with `myhttpindex-`:
+
+```
+index => "myhttpindex-%{+YYYY.MM.dd}"
 ```
 
 ### Create the logstash service
@@ -178,9 +190,18 @@ kibana:
 		- "5601"
 ```
 
-### Login to Kibana and map an index pattern to the myhttpindex
+Now re-start your docker containers:
 
-http://localhost:5601
+```
+docker-compose down
+docker-composeu up -d
+```
+
+### Login to Kibana and map an index pattern
+
+You should be able to access Kibana here: http://localhost:5601
+
+Then map an index pattern to the `myhttpindex-*` index as shown below:
 
 ![Create index pattern](./img/createIndexPattern.png)
 
@@ -194,7 +215,7 @@ http://localhost:5601
 
 ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `I'm still working on this section, but below is how I was getting a proof of concept up and running.`
 
-First we access a TTY inside the Mura container:
+First we access a TTY inside the Mura container (your container name may be different):
 `docker exec -it elkStack_mura_1 bash`
 
 Once inside, the working directory should be /usr/local/tomcat
@@ -208,12 +229,14 @@ curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.0.1-
 Then we extract filebeat using:
 
 ```
-tar xzvf filebeat-7.0.1-linux-x86_64.tar.gz blergh
+tar xzvf filebeat-7.0.1-linux-x86_64.tar.gz
 ```
+
+This will create a new directory, `filebeat-7.0.1-linux-x86_64`
 
 ### Install Vim on Lucee server
 
-While still in TTY of the Mura docker service, install Vim in preparation for the next step
+While still in the TTY of the Mura docker service, install Vim.
 
 ```
 apt-get update
@@ -231,7 +254,7 @@ Remove the default filebeat.yml
 Create a new filebeat.yml
 `vi filebeat.yml`
 
-Add the below configuration to this file. This config tells filebeat which directories and what type of files to watch. It also tells Filebeat that we want our outputs to go to Logstash at logstash:5044.
+Add the below configuration to this file. This config tells filebeat which directories and what type of files to watch. It also tells Filebeat that we want our outputs to go to Logstash at `logstash:5044`.
 
 ```
 filebeat.inputs:
@@ -261,7 +284,7 @@ processors:
 
 ### Run Filebeat
 
-We use the -e flag here to view the STDOUT of filebeat (to help us monitor if things are going wrong).
+We use the `-e` flag here to view the STDOUT of filebeat (to help us monitor if things are going wrong).
 
 ```
 ./filebeat -e
@@ -281,18 +304,18 @@ Navigate to the log directory that Filebeat is watching:
 cd /usr/local/tomcat/logs/
 ```
 
-Manually enter a new line to a Catalina log using `echo`:
+Manually enter a new line to a Catalina log file using the `echo` command. It's a good idea to copy an existing line, and then change the section after the Java class, that way you are keeping the same structure that Logstash is expecting (as outlined in the `beats.conf` file):
 
 ```
 echo '21-May-2019 17:46:32.610 INFO [main] org.apache.catalina.startup.Catalina.start THIS IS A TEST ENTRY' >> catalina.2019-05-21.log
 ```
 
-Note: If you use Vim to do this, all lines will be resent to Logstash instead of just the new line.
+Note: We use `echo` instead of Vim here, because if you use Vim to do this, all lines will be resent to Logstash instead of just the new line.
 
 ### Map an index pattern to the serverlog index
 
 In Kibana, click on the Kibana icon in the top left corner.
-Then click "Index Patterns" under "Manage and Administer the Elastic Stack".
+Then, under "Manage and Administer the Elastic Stack", click "Index Patterns".
 
 Then you can create a `serverlogs-*` index pattern.
 
